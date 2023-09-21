@@ -1,6 +1,7 @@
 import streamlit as st
 import re
 from datetime import datetime
+import pytz  # Importe a biblioteca pytz para lidar com fusos horários
 
 st.set_page_config(page_title="Cadastro de Clientes")
 
@@ -45,8 +46,9 @@ def main():
                 f'</div>',
                 unsafe_allow_html=True
             )
-            # Obtém a data e a hora atual
-            data_hora_atual = datetime.now().strftime("%d/%m/%Y às %H:%M:%S")
+            # Obtém a data e a hora atual em São Paulo
+            tz = pytz.timezone('America/Sao_Paulo')
+            data_hora_atual = datetime.now(tz).strftime("%d/%m/%Y às %H:%M:%S")
             # Exibe a mensagem de sucesso com a data e hora
             st.success(f"Dados gravados com sucesso em {data_hora_atual}.")
         else:
