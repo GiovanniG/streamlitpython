@@ -7,10 +7,11 @@ import mysql.connector
 # Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
     return mysql.connector.connect(
-        host="containers-us-west-200.railway.app",
+        host="containers-us-west-60.railway.app",
         user="root",
-        password="DNmptpDcP8c5Hmy0bn72",
-        database="railway"
+        password="U5dsl1BkLfAUbHwjsoVY",
+        database="railway",
+        port=5823
     )
 
 st.set_page_config(page_title="Cadastro de Clientes")
