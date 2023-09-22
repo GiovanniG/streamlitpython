@@ -4,7 +4,7 @@ from datetime import datetime
 import pytz
 import mysql.connector
 
-# Defina a função criar_conexao para criar uma conexão com o banco de dados
+# Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
     return mysql.connector.connect(
         host="containers-us-west-200.railway.app",
