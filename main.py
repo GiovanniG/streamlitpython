@@ -45,7 +45,25 @@ def main():
         cpf_valido = bool(re.match(r'^\d{11}$', cpf))
 
         if nome_valido and cpf_valido:
-            # Use st.markdown para aplicar o estilo com borda
+            # Obtém a data e a hora atual em São Paulo
+            tz = pytz.timezone('America/Sao_Paulo')
+            data_hora_atual = datetime.now(tz)
+
+            # Separa as informações de data e hora em colunas diferentes
+            data_atual = data_hora_atual.strftime("%Y-%m-%d")
+            hora_atual = data_hora_atual.strftime("%H:%M:%S")
+
+            # Agora você pode usar a função criar_conexao para conectar-se ao banco de dados e
+            # realizar operações de banco de dados, se necessário.
+            conexao = criar_conexao()
+            # Exemplo de consulta SQL com colunas de data e hora separadas
+            cursor = conexao.cursor()
+            cursor.execute("INSERT INTO clientes (nome, cpf, data, hora) "
+                           "VALUES (%s, %s, %s, %s)", (nome, cpf, data_atual, hora_atual))
+            conexao.commit()
+            conexao.close()
+
+            # Use st.markdown para aplicar o estilo com borda e exibir informações ao usuário
             st.markdown(
                 f'<div style="border: 1px solid #ccc; '
                 f'padding: 20px; border-radius: 10px; '
@@ -53,22 +71,15 @@ def main():
                 f'<h3>Informações do Cliente</h3>'
                 f'<p><strong>Nome:</strong> {nome}</p>'
                 f'<p><strong>CPF:</strong> {cpf}</p>'
+                f'<p><strong>Data:</strong> {data_atual}</p>'
+                f'<p><strong>Hora:</strong> {hora_atual}</p>'
                 f'</div>',
                 unsafe_allow_html=True
             )
-            # Obtém a data e a hora atual em São Paulo
-            tz = pytz.timezone('America/Sao_Paulo')
-            data_hora_atual = datetime.now(tz).strftime("%d/%m/%Y às %H:%M:%S")
-            # Exibe a mensagem de sucesso com a data e hora
-            st.success(f"Dados gravados com sucesso em {data_hora_atual}.")
 
-            # Agora você pode usar a função criar_conexao para conectar-se ao banco de dados e realizar operações de banco de dados, se necessário.
-            conexao = criar_conexao()
-            # Exemplo de consulta SQL
-            cursor = conexao.cursor()
-            cursor.execute("INSERT INTO clientes (nome, cpf) VALUES (%s, %s)", (nome, cpf))
-            conexao.commit()
-            conexao.close()
+            # Exibe a mensagem de sucesso
+            st.success("Dados gravados com sucesso.")
+
         else:
             if not nome_valido:
                 st.warning("O campo Nome não pode conter números.")
