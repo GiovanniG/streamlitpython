@@ -3,12 +3,13 @@ from datetime import datetime
 import pytz
 import mysql.connector
 
-# Função para verificar se uma string é um número decimal ou está vazia
+# Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
     if s.strip() == "":
         return True
     try:
-        float(s.replace(",", "."))
+        # Verifique se a string pode ser convertida em float usando ponto como separador decimal
+        float(s)
         return True
     except ValueError:
         return False
@@ -37,7 +38,7 @@ def main():
             f'</div>',
             unsafe_allow_html=True
         )
-        st.warning("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto. Por exemplo: 3.25.\n\n"
+        st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
                  "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h.")
 
@@ -68,10 +69,10 @@ def main():
         # Adicione um parâmetro de entrada para "Comentário"
         comentario = st.text_input("Comentário:")
 
-        # Quando o botão "Enviar" for clicado, verifique se os campos de 1 a 6 contêm apenas números
+        # Quando o botão "Enviar" for clicado, verifique se os campos de 1 a 6 contêm apenas números com ponto como separador decimal
         if st.button("Enviar"):
             if not all(is_decimal_or_empty(parametro) for parametro in [parametro1, parametro2, parametro3, parametro4, parametro5, parametro6]):
-                st.error("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto. Por exemplo: 3.25")
+                st.error("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.")
             else:
                 # Obtenha a data e a hora atual em São Paulo
                 tz = pytz.timezone('America/Sao_Paulo')
