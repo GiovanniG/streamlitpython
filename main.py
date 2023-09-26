@@ -37,8 +37,8 @@ def main():
             f'</div>',
             unsafe_allow_html=True
         )
-        st.warning("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto como separador decimal. Por exemplo: 3.25.\n\n"
-                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
+        st.warning("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto. Por exemplo: 3.25.\n\n"
+                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM6ODctMDg2My00MTU1LThmYTAtYmFhNjZjYmQ0OTkxIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h.")
 
     # Na primeira coluna (col1), adicione um seletor antes de "Parâmetro 1" com as opções
@@ -47,21 +47,31 @@ def main():
         opcoes = ["#92", "BW Datakon", "Caldeira", "Chillers Catenárias"]
         parametro_selecionado = st.selectbox("Selecione a localidade:", opcoes)
 
-        # Adicione parâmetros de entrada para "Parâmetro 1" a "Parâmetro 6"
-        parametros = []
-        for i in range(1, 7):
-            parametro = st.text_input(f"Parâmetro {i}:")
-            parametros.append(parametro)
+        # Adicione um parâmetro de entrada para "Parâmetro 1"
+        parametro1 = st.text_input("Parâmetro 1:")
+
+        # Adicione um parâmetro de entrada para "Parâmetro 2"
+        parametro2 = st.text_input("Parâmetro 2:")
+
+        # Adicione um parâmetro de entrada para "Parâmetro 3"
+        parametro3 = st.text_input("Parâmetro 3:")
+
+        # Adicione um parâmetro de entrada para "Parâmetro 4"
+        parametro4 = st.text_input("Parâmetro 4:")
+
+        # Adicione um parâmetro de entrada para "Parâmetro 5"
+        parametro5 = st.text_input("Parâmetro 5:")
+
+        # Adicione um parâmetro de entrada para "Parâmetro 6"
+        parametro6 = st.text_input("Parâmetro 6:")
 
         # Adicione um parâmetro de entrada para "Comentário"
         comentario = st.text_input("Comentário:")
 
         # Quando o botão "Enviar" for clicado, verifique se os campos de 1 a 6 contêm apenas números
         if st.button("Enviar"):
-            if not all(is_decimal_or_empty(parametro) for parametro in parametros):
-                st.error("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto como separador decimal. Por exemplo: 3.25")
-            elif any(',' in parametro for parametro in parametros):
-                st.error("Use ponto (.) como separador decimal nos campos de 1 a 6. Por exemplo: 3.25")
+            if not all(is_decimal_or_empty(parametro) for parametro in [parametro1, parametro2, parametro3, parametro4, parametro5, parametro6]):
+                st.error("Os campos de 1 a 6 devem conter apenas números ou permanecer em branco. Se necessário, utilize ponto. Por exemplo: 3.25")
             else:
                 # Obtenha a data e a hora atual em São Paulo
                 tz = pytz.timezone('America/Sao_Paulo')
@@ -82,9 +92,10 @@ def main():
                     conexao = criar_conexao()
                     # Exemplo de consulta SQL com nomes de colunas correspondentes
                     cursor = conexao.cursor()
-                    cursor.execute(f"INSERT INTO {tabela} (Codigo, Data, Hora, pH, Salinidade, Condutividade_Eletrica, Turbidez, Comentario) "
-                                   "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
-                                   (parametro_selecionado, data_atual, hora_atual, *parametros, comentario))
+                    cursor.execute(
+                        f"INSERT INTO {tabela} (Codigo, Data, Hora, pH, Salinidade, Condutividade_Eletrica, Turbidez, Comentario) "
+                        "VALUES (%s, %s, %s, %s, %s, %s, %s, %s)",
+                        (parametro_selecionado, data_atual, hora_atual, parametro1, parametro2, parametro3, parametro4, comentario))
                     conexao.commit()
                     conexao.close()
 
@@ -95,12 +106,12 @@ def main():
                         f'box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">'
                         f'<h3>Informações do Cliente</h3>'
                         f'<p><strong>Localidade Selecionada:</strong> {parametro_selecionado}</p>'
-                        f'<p><strong>Parâmetro 1:</strong> {parametros[0]}</p>'
-                        f'<p><strong>Parâmetro 2:</strong> {parametros[1]}</p>'
-                        f'<p><strong>Parâmetro 3:</strong> {parametros[2]}</p>'
-                        f'<p><strong>Parâmetro 4:</strong> {parametros[3]}</p>'
-                        f'<p><strong>Parâmetro 5:</strong> {parametros[4]}</p>'
-                        f'<p><strong>Parâmetro 6:</strong> {parametros[5]}</p>'
+                        f'<p><strong>Parâmetro 1:</strong> {parametro1}</p>'
+                        f'<p><strong>Parâmetro 2:</strong> {parametro2}</p>'
+                        f'<p><strong>Parâmetro 3:</strong> {parametro3}</p>'
+                        f'<p><strong>Parâmetro 4:</strong> {parametro4}</p>'
+                        f'<p><strong>Parâmetro 5:</strong> {parametro5}</p>'
+                        f'<p><strong>Parâmetro 6:</strong> {parametro6}</p>'
                         f'<p><strong>Comentário:</strong> {comentario}</p>'
                         f'<p><strong>Data:</strong> {data_atual}</p>'
                         f'<p><strong>Hora:</strong> {hora_atual}</p>'
