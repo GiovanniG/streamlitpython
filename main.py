@@ -15,6 +15,17 @@ def is_decimal_or_empty(s):
     except ValueError:
         return False
 
+# Função para exibir informações formatadas em HTML
+def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual, hora_atual):
+    info_html = ""
+    info_html += f'<p><strong>Localidade Selecionada:</strong> {parametro_selecionado}</p>'
+    for i, parametro in enumerate(parametros, start=1):
+        info_html += f'<p><strong>Parâmetro {i}:</strong> {parametro}</p>'
+    info_html += f'<p><strong>Comentário:</strong> {comentario}</p>'
+    info_html += f'<p><strong>Data:</strong> {data_atual}</p>'
+    info_html += f'<p><strong>Hora:</strong> {hora_atual}</p>'
+    return info_html
+
 # Lê as variáveis de ambiente do arquivo .env
 DB_HOST = config('DB_HOST')
 DB_USER = config('DB_USER')
@@ -47,7 +58,7 @@ def main():
             unsafe_allow_html=True
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
-                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
+                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmFkYTRhYjg4Yzg3IiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h.")
 
     # Na primeira coluna (col1), adicione um seletor antes de "Parâmetro 1" com as opções
@@ -114,16 +125,7 @@ def main():
                         f'padding: 20px; border-radius: 10px; '
                         f'box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">'
                         f'<h3>Informações do Cliente</h3>'
-                        f'<p><strong>Localidade Selecionada:</strong> {parametro_selecionado}</p>'
-                        f'<p><strong>Parâmetro 1:</strong> {parametro1}</p>'
-                        f'<p><strong>Parâmetro 2:</strong> {parametro2}</p>'
-                        f'<p><strong>Parâmetro 3:</strong> {parametro3}</p>'
-                        f'<p><strong>Parâmetro 4:</strong> {parametro4}</p>'
-                        f'<p><strong>Parâmetro 5:</strong> {parametro5}</p>'
-                        f'<p><strong>Parâmetro 6:</strong> {parametro6}</p>'
-                        f'<p><strong>Comentário:</strong> {comentario}</p>'
-                        f'<p><strong>Data:</strong> {data_atual}</p>'
-                        f'<p><strong>Hora:</strong> {hora_atual}</p>'
+                        f'{exibir_informacoes(parametro_selecionado, [parametro1, parametro2, parametro3, parametro4, parametro5, parametro6], comentario, data_atual, hora_atual)}'
                         f'</div>',
                         unsafe_allow_html=True
                     )
