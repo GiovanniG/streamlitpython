@@ -43,7 +43,7 @@ def criar_conexao():
         port=DB_PORT
     )
 
-st.set_page_config(page_title="Controle Operacional")
+st.set_page_config(page_title="Controle Operacional", layout="wide")
 
 def main():
     # Divida a página em duas colunas
