@@ -55,7 +55,7 @@ def main():
             unsafe_allow_html=True
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
-                 "Caso queira visualizar a dashboard em tela cheia, "
+                 "Caso queira visualizar a dashboard numa nova janela, "
                  "[clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h."
                  )
