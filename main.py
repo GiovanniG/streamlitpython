@@ -57,7 +57,10 @@ def main():
             unsafe_allow_html=True
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
-                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmFyZ2l0LnVzLXdlc3QtNTAuY29udGFpbmVycy51c3VybmFtZS5zYW9hcGlkLnBvc3RyZWlkYmVzc2VzLmNvbS5icmFpbGdhdGluZyJ9&pageName=ReportSection).")
+                   "Caso queira consultar a dashboard numa nova janela, "
+                   "[clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
+                   "A dashboard é atualizada a cada 3h, começando às 0h."
+                   )
 
     # Na primeira coluna (col1), adicione um seletor antes de "Parâmetro 1" com as opções
     with col1:
@@ -164,8 +167,8 @@ def main():
         # Adicione o iframe abaixo da tabela
         st.components.v1.iframe(
             src="https://app.powerbi.com/reportEmbed?reportId=e7e095bc-222c-4d22-a452-dfa1ef330e80&autoAuth=true&ctid=b1ed6f6d-b6d0-4b91-8de0-13c75ed490a2",
-            width=1140,
-            height=541.25,
+            width=733.5,
+            height=455.0,
         )
 
 if __name__ == "__main__":
