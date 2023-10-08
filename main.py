@@ -42,9 +42,11 @@ def criar_conexao():
         port=db_port
     )
 
+st.set_page_config(page_title="Controle Operacional", layout="wide")
+
 def main():
     # Divida a página em duas colunas
-    col1, col2 = st.columns(2)
+    col1, col2 = st.columns([1, 1])  # Ambas as colunas têm a mesma largura
 
     # Mensagem de aviso entre "Controle Operacional" e "Selecione a localidade"
     with col1:
@@ -55,10 +57,7 @@ def main():
             unsafe_allow_html=True
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
-                 "Caso queira visualizar a dashboard numa nova janela, "
-                 "[clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
-                 "A dashboard é atualizada a cada 3h, começando às 0h."
-                 )
+                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmFyZ2l0LnVzLXdlc3QtNTAuY29udGFpbmVycy51c3VybmFtZS5zYW9hcGlkLnBvc3RyZWlkYmVzc2VzLmNvbS5icmFpbGdhdGluZyJ9&pageName=ReportSection).")
 
     # Na primeira coluna (col1), adicione um seletor antes de "Parâmetro 1" com as opções
     with col1:
@@ -163,12 +162,11 @@ def main():
         st.text("FONTE: AUTOR, 2023.")
 
         # Adicione o iframe abaixo da tabela
-        st.markdown(
-            '<iframe title="Controle Operacional BD" width="733.5" height="501.25" src="https://app.powerbi.com/reportEmbed?reportId=e7e095bc-222c-4d22-a452-dfa1ef330e80&autoAuth=true&ctid=b1ed6f6d-b6d0-4b91-8de0-13c75ed490a2" frameborder="0" allowFullScreen="true"></iframe>',
-            unsafe_allow_html=True
+        st.components.v1.iframe(
+            src="https://app.powerbi.com/reportEmbed?reportId=e7e095bc-222c-4d22-a452-dfa1ef330e80&autoAuth=true&ctid=b1ed6f6d-b6d0-4b91-8de0-13c75ed490a2",
+            width=1140,
+            height=541.25,
         )
 
 if __name__ == "__main__":
     main()
-
-st.set_page_config(page_title="Controle Operacional", layout="wide")
