@@ -42,8 +42,6 @@ def criar_conexao():
         port=db_port
     )
 
-st.set_page_config(page_title="Controle Operacional", layout="wide")
-
 def main():
     # Divida a página em duas colunas
     col1, col2 = st.columns(2)
@@ -58,7 +56,7 @@ def main():
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
                  "Caso queira visualizar a dashboard em tela cheia, "
-                 "[clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmFyZ2l0LnVzLXdlc3QtNTAuY29udGFpbmVycy51c3VybmFtZS5zYW9hcGlkLnBvc3RyZWlkYmVzc2VzLmNvbS5icmFpbGdhdGluZyJ9&pageName=ReportSection).\n\n"
+                 "[clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h."
                  )
 
@@ -172,3 +170,5 @@ def main():
 
 if __name__ == "__main__":
     main()
+
+st.set_page_config(page_title="Controle Operacional", layout="wide")
