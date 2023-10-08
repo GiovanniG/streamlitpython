@@ -17,7 +17,7 @@ def is_decimal_or_empty(s):
 # Função para exibir informações formatadas em HTML
 def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual, hora_atual):
     info_html = ""
-    info_html += f'<p><strong>Localidade Selecionada:</strong> {parametro_selecionado}</p>'
+    info_html += f'<p><strong>Localidade:</strong> {parametro_selecionado}</p>'
     for i, parametro in enumerate(parametros, start=1):
         info_html += f'<p><strong>Parâmetro {i}:</strong> {parametro}</p>'
     info_html += f'<p><strong>Comentário:</strong> {comentario}</p>'
@@ -51,13 +51,13 @@ def main():
     # Mensagem de aviso entre "Controle Operacional" e "Selecione a localidade"
     with col1:
         st.markdown(
-            f'<div style="text-align:center;">'
+            f'<div style="text-align:center;">'  # Adicione o estilo CSS para centralizar
             f'<h2 style="font-weight: bold;">Controle Operacional</h2>'
             f'</div>',
             unsafe_allow_html=True
         )
         st.warning("Os campos de 1 a 6 devem conter apenas números (use ponto como separador decimal) ou permanecer em branco.\n\n"
-                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
+                 "Caso queira consultar a dashboard com todos os dados, [clique aqui](https://app.powerbi.com/view?r=eyJrIjoiMGJhODM6qwdcudwd9r3tMDg2My00MTU1LThmYTAtYmFyZ0pIZy8pYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9).\n\n"
                  "A dashboard é atualizada a cada 3h, começando às 0h.")
 
     # Na primeira coluna (col1), adicione um seletor antes de "Parâmetro 1" com as opções
@@ -118,6 +118,17 @@ def main():
                     conexao.commit()
                     conexao.close()
 
+                    # Use st.markdown para aplicar o estilo com borda e exibir informações ao usuário
+                    st.markdown(
+                        f'<div style="border: 1px solid #ccc; '
+                        f'padding: 20px; border-radius: 10px; '
+                        f'box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">'
+                        f'<h3>Informações</h3>'
+                        f'{exibir_informacoes(parametro_selecionado, [parametro1, parametro2, parametro3, parametro4, parametro5, parametro6], comentario, data_atual, hora_atual)}'
+                        f'</div>',
+                        unsafe_allow_html=True
+                    )
+
                     # Exibe a mensagem de sucesso
                     st.success("Dados gravados com sucesso.")
 
@@ -132,28 +143,17 @@ def main():
         ]
 
         # Título acima da tabela
-        st.write("Quadro de parâmetros e respectivas unidades")
-
-        # Use CSS para centralizar a tabela horizontalmente
         st.markdown(
-            """
-            <style>
-            table {
-                width: 100%;
-                text-align: center;
-            }
-            td, th {
-                text-align: center;
-            }
-            </style>
-            """,
+            f'<div style="text-align:center;">'  # Adicione o estilo CSS para centralizar
+            f'<h3>Quadro de parâmetros e respectivas unidades</h3>'
+            f'</div>',
             unsafe_allow_html=True
         )
 
-        # Use st.markdown para personalizar o estilo da tabela e remover os índices
-        tabela_html = "<table><tr><th>{}</th></tr>{}</table>".format(
-            "</th><th>".join(dados_tabela[0]),
-            "</tr><tr>".join("<td>{}</td>".format("</td><td>".join(map(str, row))) for row in dados_tabela[1:])
+        # Use st.markdown para personalizar o estilo da tabela e centralizar o conteúdo
+        tabela_html = "<table><tr><th style='text-align:center'>{}</th></tr>{}</table>".format(
+            "</th><th style='text-align:center'>".join(dados_tabela[0]),
+            "</tr><tr>".join("<td style='text-align:center'>{}</td>".format("</td><td style='text-align:center'>".join(map(str, row))) for row in dados_tabela[1:])
         )
 
         # Adicionar a tabela com o título
