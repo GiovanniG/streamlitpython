@@ -2,7 +2,6 @@ import streamlit as st
 from datetime import datetime
 import pytz
 import mysql.connector
-from decouple import config
 
 # Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
@@ -26,21 +25,21 @@ def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual
     info_html += f'<p><strong>Hora:</strong> {hora_atual}</p>'
     return info_html
 
-# Lê as variáveis de ambiente do arquivo .env
-DB_HOST = config('DB_HOST')
-DB_USER = config('DB_USER')
-DB_PASSWORD = config('DB_PASSWORD')
-DB_DATABASE = config('DB_DATABASE')
-DB_PORT = config('DB_PORT')
+# Defina as informações de conexão diretamente no código
+db_host = "containers-us-west-50.railway.app"
+db_username = "root"
+db_password = "9Q1GwToqNMsMyaaKlr8T"
+db_database = "railway"
+db_port = "7095"
 
 # Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
     return mysql.connector.connect(
-        host=DB_HOST,
-        user=DB_USER,
-        password=DB_PASSWORD,
-        database=DB_DATABASE,
-        port=DB_PORT
+        host=db_host,
+        user=db_username,
+        password=db_password,
+        database=db_database,
+        port=db_port
     )
 
 st.set_page_config(page_title="Controle Operacional", layout="wide")
