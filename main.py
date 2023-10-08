@@ -118,17 +118,6 @@ def main():
                     conexao.commit()
                     conexao.close()
 
-                    # Use st.markdown para aplicar o estilo com borda e exibir informações ao usuário
-                    st.markdown(
-                        f'<div style="border: 1px solid #ccc; '
-                        f'padding: 20px; border-radius: 10px; '
-                        f'box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);">'
-                        f'<h3>Informações do Cliente</h3>'
-                        f'{exibir_informacoes(parametro_selecionado, [parametro1, parametro2, parametro3, parametro4, parametro5, parametro6], comentario, data_atual, hora_atual)}'
-                        f'</div>',
-                        unsafe_allow_html=True
-                    )
-
                     # Exibe a mensagem de sucesso
                     st.success("Dados gravados com sucesso.")
 
@@ -144,6 +133,22 @@ def main():
 
         # Título acima da tabela
         st.write("Quadro de parâmetros e respectivas unidades")
+
+        # Use CSS para centralizar a tabela horizontalmente
+        st.markdown(
+            """
+            <style>
+            table {
+                width: 100%;
+                text-align: center;
+            }
+            td, th {
+                text-align: center;
+            }
+            </style>
+            """,
+            unsafe_allow_html=True
+        )
 
         # Use st.markdown para personalizar o estilo da tabela e remover os índices
         tabela_html = "<table><tr><th>{}</th></tr>{}</table>".format(
