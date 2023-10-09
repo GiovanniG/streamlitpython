@@ -166,7 +166,7 @@ def main():
 
         # Adicione o iframe abaixo da tabela
         st.components.v1.iframe(
-            src="https://app.powerbi.com/reportEmbed?reportId=e7e095bc-222c-4d22-a452-dfa1ef330e80&autoAuth=true&ctid=b1ed6f6d-b6d0-4b91-8de0-13c75ed490a2",
+            src="https://app.powerbi.com/view?r=eyJrIjoiMGJhODM2ODctMDg2My00MTU1LThmYTAtYmY0YTQ5OWYzMzliIiwidCI6ImIxZWQ2ZjZkLWI2ZDAtNGI5MS04ZGUwLTEzYzc1ZWQ0OTBhMiJ9",
             width=733.5,
             height=455.0,
         )
