@@ -2,6 +2,8 @@ import streamlit as st
 from datetime import datetime
 import pytz
 import mysql.connector
+import pandas as pd
+import base64
 
 # Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
@@ -42,10 +44,23 @@ def criar_conexao():
         port=db_port
     )
 
+# Função para extrair todos os dados da base de dados e salvá-los em um arquivo Excel
+def download_base_dados():
+    conexao = criar_conexao()
+    # Obtenha todas as tabelas do banco de dados
+    tabelas = pd.read_sql("SHOW TABLES", conexao)
+    with pd.ExcelWriter('base_dados.xlsx') as writer:
+        for tabela in tabelas['Tables_in_railway']:
+            query = f"SELECT * FROM {tabela}"
+            df = pd.read_sql(query, conexao)
+            df.to_excel(writer, sheet_name=tabela, index=False)
+    conexao.close()
+
+# Configurações da página Streamlit
 st.set_page_config(page_title="Controle Operacional", layout="wide")
 
 def main():
-    # Divida a página em duas colunas
+    # Divide a página em duas colunas
     col1, col2 = st.columns([1, 1])  # Ambas as colunas têm a mesma largura
 
     # Mensagem de aviso entre "Controle Operacional" e "Selecione a localidade"
@@ -170,6 +185,19 @@ def main():
             width=733.5,
             height=455.0,
         )
+
+    # Adicione um botão para baixar todos os dados abaixo do painel do Power BI
+    with col2:
+        st.write("")  # Espaço em branco
+        st.write("")  # Espaço em branco
+        st.write("")  # Espaço em branco
+    if st.button("Clique aqui para baixar a base de dados"):
+        download_base_dados()
+        # Gere um link para o arquivo Excel gerado
+        with open("base_dados.xlsx", "rb") as file:
+            b64 = base64.b64encode(file.read()).decode()
+            href = f'<a href="data:application/octet-stream;base64,{b64}" download="base_dados.xlsx">Download da base de dados</a>'
+        st.markdown(href, unsafe_allow_html=True)
 
 if __name__ == "__main__":
     main()
