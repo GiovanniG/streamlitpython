@@ -4,6 +4,7 @@ import pytz
 import mysql.connector
 import pandas as pd
 import base64
+from decouple import config  # Importa a função config do decouple
 
 # Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
@@ -27,12 +28,12 @@ def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual
     info_html += f'<p><strong>Hora:</strong> {hora_atual}</p>'
     return info_html
 
-# Defina as informações de conexão diretamente no código
-db_host = "containers-us-west-50.railway.app"
-db_username = "root"
-db_password = "9Q1GwToqNMsMyaaKlr8T"
-db_database = "railway"
-db_port = "7095"
+# Defina as informações de conexão usando as variáveis de ambiente do .env
+db_host = config('DB_HOST')
+db_username = config('DB_USER')
+db_password = config('DB_PASSWORD')
+db_database = config('DB_DATABASE')
+db_port = config('DB_PORT')
 
 # Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
