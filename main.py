@@ -4,7 +4,7 @@ import pytz
 import mysql.connector
 import pandas as pd
 import base64
-from decouple import config  # Importa a função config do decouple
+from decouple import Csv
 
 # Carregue as variáveis de ambiente do arquivo .env
 config.read_dotenv()
@@ -32,11 +32,11 @@ def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual
     return info_html
 
 # Defina as informações de conexão usando as variáveis de ambiente do .env
-db_host = config('DB_HOST')
-db_username = config('DB_USER')
-db_password = config('DB_PASSWORD')
-db_database = config('DB_DATABASE')
-db_port = config('DB_PORT')
+db_host = Csv('DB_HOST')
+db_username = Csv('DB_USER')
+db_password = Csv('DB_PASSWORD')
+db_database = Csv('DB_DATABASE')
+db_port = Csv('DB_PORT')
 
 # Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
