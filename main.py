@@ -4,12 +4,8 @@ import pytz
 import mysql.connector
 import pandas as pd
 import base64
-from dotenv import load_dotenv
-import os
+from decouple import config
 
-
-# Carregue as variáveis de ambiente do arquivo .env
-load_dotenv()
 
 # Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
@@ -33,12 +29,12 @@ def exibir_informacoes(parametro_selecionado, parametros, comentario, data_atual
     info_html += f'<p><strong>Hora:</strong> {hora_atual}</p>'
     return info_html
 
-# Defina as informações de conexão usando as variáveis de ambiente do .env
-db_host = os.getenv('DB_HOST')
-db_username = os.getenv('DB_USER')
-db_password = os.getenv('DB_PASSWORD')
-db_database = os.getenv('DB_DATABASE')
-db_port = os.getenv('DB_PORT')
+# Lê as variáveis de ambiente do arquivo .env
+db_host = config('DB_HOST')
+db_username = config('DB_USER')
+db_password = config('DB_PASSWORD')
+db_database = config('DB_DATABASE')
+db_port = config('DB_PORT')
 
 # Define a função criar_conexao para criar uma conexão com o banco de dados
 def criar_conexao():
