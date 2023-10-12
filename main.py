@@ -6,6 +6,9 @@ import pandas as pd
 import base64
 from decouple import config  # Importa a função config do decouple
 
+# Carregue as variáveis de ambiente do arquivo .env
+config.read_dotenv()
+
 # Função para verificar se uma string é um número decimal com ponto ou está vazia
 def is_decimal_or_empty(s):
     if s.strip() == "":
